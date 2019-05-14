@@ -4,6 +4,7 @@ import {UIMNavigation} from "./components/uim/UIMNavigation";
 import {UIMUserCenter} from "./components/uim/UIMUserCenter";
 import {ProtectedContent} from "./components/demo/ProtectedContent";
 import {PublicContent} from "./components/demo/PublicContent";
+import {ClipLoader} from 'react-spinners';
 
 export class App extends React.Component {
     state = {
@@ -36,13 +37,26 @@ export class App extends React.Component {
         window.uimApiInstancePromise.then((apiInstance) => {
             uimInitialCallback(apiInstance, that);
 
-            apiInstance.getAuthenticatedUser().then(() => {
+            // just some spinner delay
+            setTimeout(() => apiInstance.getAuthenticatedUser().then(() => {
                 this.setState({authenticated: true, loading: false})
             }).catch(() => {
                 this.setState({authenticated: false, loading: false})
-            })
+            }), 600);
         })
     }
+
+    renderLoader = () => {
+        return <div className='sweet-loading' style={{position: "relative", top: "1em"}}>
+            <ClipLoader
+                css={null}
+                sizeUnit={"px"}
+                size={100}
+                color={'#123abc'}
+                loading={this.state.loading}
+            />
+        </div>
+    };
 
     render() {
         return (
@@ -51,7 +65,8 @@ export class App extends React.Component {
                 <UIMUserCenter/>
 
                 <div style={{marginTop: "2vh"}}>
-                    {this.state.loading ? "LOADING" : this.state.authenticated ? <ProtectedContent/> : <PublicContent/>}
+                    {this.state.loading ? this.renderLoader() : this.state.authenticated ? <ProtectedContent/> :
+                        <PublicContent/>}
                 </div>
             </div>
         );
