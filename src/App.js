@@ -1,26 +1,61 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {UIMNavigation} from "./components/uim/UIMNavigation";
+import {UIMUserCenter} from "./components/uim/UIMUserCenter";
+import {ProtectedContent} from "./components/demo/ProtectedContent";
+import {PublicContent} from "./components/demo/PublicContent";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export class App extends React.Component {
+    state = {
+        authenticated: false,
+        loading: true
+    };
+
+    componentDidMount() {
+        const that = this;
+
+        function uimInitialCallback(uimApiInstance, that) {
+            const uimApi = window.uimApi;
+
+            uimApi.EventBus.listen(uimApi.Events.LOGIN_SUCCESS, function () {
+                uimApiInstance.getAuthenticatedUser().then(function (user) {
+                    console.log('User', user.siloUserId, 'is logged in');
+                    that.setState({authenticated: true})
+                });
+            });
+            uimApi.EventBus.listen(uimApi.Events.INITIAL_LOGGED_OUT, function () {
+                console.log('The user was logged out initially (on site load)');
+                that.setState({authenticated: false})
+            });
+            uimApi.EventBus.listen(uimApi.Events.LOGGED_OUT, function () {
+                console.log('The user has logged out actively');
+                that.setState({authenticated: false})
+            });
+        }
+
+        window.uimApiInstancePromise.then((apiInstance) => {
+            uimInitialCallback(apiInstance, that);
+
+            apiInstance.getAuthenticatedUser().then(() => {
+                this.setState({authenticated: true, loading: false})
+            }).catch(() => {
+                this.setState({authenticated: false, loading: false})
+            })
+        })
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <UIMNavigation/>
+                <UIMUserCenter/>
+
+                <div style={{marginTop: "2vh"}}>
+                    {this.state.loading ? "LOADING" : this.state.authenticated ? <ProtectedContent/> : <PublicContent/>}
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
