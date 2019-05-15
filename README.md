@@ -1,68 +1,52 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# RBMHUIM-1616 - Create a simple demo site for checking the integration docs
 
-## Available Scripts
+... and Identify which parts of the "integration flow" can be improved and what 
+is missing in the documentation.
 
-In the project directory, you can run:
+For further details see: [RBMHUIM-1616](https://jira.redbullmediahouse.com/browse/RBMHUIM-1616)
 
-### `npm start`
+## How to run the demo app
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This app has been bootstrapped using create-react-app. You just have to run `npm install` 
+followed by `npm start`.
+Afterwards your browser should open http://localhost:3000/ in a new tab automatically.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+As you can see in the screenshots below UIM Login plugin integration with React generally 
+works: 
 
-### `npm test`
+- Adding the uim-navigation element
+- Adding the usercenter element
+- Load the plugin scripts
+- Language initialization
+- Using the UIM API
+- Register callbacks in order to react to events on the UIM bus
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+While basic functionality can easily be achieved just by reading the documentation 
+I encountered a few problems when I tried to use some advanced features or add custom 
+stylings (see [Findings](#findings) below).
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Unauthorized user](img/1.png)
+![UIM login screen](img/2.png)
+![Authorized user](img/3.png)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Findings
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Using UIM toasts
+Setting `data-uim-show-toasts` to `true` on `uim-navigation` has no effect.
 
-### `npm run eject`
+### UI Styling
+1) Overriding UIM styles does not work out-of-the-box by adding a custom stylesheet. 
+Only hiding elements using `display: none` and changing the background color of the
+dropdown menu works fine, see `styles.scss`  (I'm not sure if this is just a React problem)
+2) IntelliJ won't accept the given sample stylesheet as a valid `.sass` file. 
+Since the usage of semicolons and curved brackets this seems to be SCSS.
+3) There's a missing curved closed bracket at the enf of the sample stylesheet.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Trivia
+#### UIM Login Plugin: 
+- Hyperlink to `https://uim-design.redbull.com/static/plugin-demos/3.3/redbull/index.html` is
+cut off after `../plugins-demos/`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+#### Use Case: UIM Web Plugin on a voting site: 
+- Hyperlink in "Step 2" leads to a 404 error page
