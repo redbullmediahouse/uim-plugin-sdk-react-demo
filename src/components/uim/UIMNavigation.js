@@ -1,9 +1,10 @@
 import React from "react";
+import "../../styles.scss" // not necessary
 
 const CLIENT_ID = "55a61a30945dd21cec9f2001";
 
 export const UIMNavigation = () =>
-    <div style={{minHeight: "55px", backgroundColor: "#142546", display: "flex", flexDirection: "row-reverse"}}>
+    <div className="uim-custom-navbar">
         <div style={{marginRight: "6vh", marginTop: "2vh"}}>
             <div id="uim-navigation"
                  className="rb-uim uim-navigation"

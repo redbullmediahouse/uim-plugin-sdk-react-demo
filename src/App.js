@@ -6,6 +6,8 @@ import {ProtectedContent} from "./components/demo/ProtectedContent";
 import {PublicContent} from "./components/demo/PublicContent";
 import {ClipLoader} from 'react-spinners';
 
+import "./styles.scss";
+
 export class App extends React.Component {
     state = {
         authenticated: false,
@@ -64,7 +66,7 @@ export class App extends React.Component {
                 <UIMNavigation/>
                 <UIMUserCenter/>
 
-                <div style={{marginTop: "2vh"}}>
+                <div style={{marginTop: "2vh"}} className="app-content">
                     {this.state.loading ? this.renderLoader() : this.state.authenticated ? <ProtectedContent/> :
                         <PublicContent/>}
                 </div>
