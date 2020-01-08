@@ -1,0 +1,246 @@
+/* colors used in this file */
+$font-color-primary: #efefef;
+$font-color-invalid: #cc1c4a;
+$font-color-inverted: #000;
+$font-color-inverted-alternative: #213872;
+$background-color-light: #0c2044;
+$background-color-dark: #213872;
+$background-color-inverted: #fff;
+$border-color-light: #c0c0c0;
+$border-color-dark: #0b162f;
+
+.uim-custom-navbar { // this custom style works!
+  min-height: 55px;
+  background-color: #142546;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.uim-dropdown-submenu__li:nth-of-type(2) { // hiding elements will work too
+  display: none;
+}
+
+.uim-dropdown-submenu__li {
+  background-color: red;
+}
+
+.uim-btn--full {
+  background-color: green;
+}
+
+// these overrides don't!
+/* mixins that are used in this file */
+@mixin basic-button() {
+  color: $font-color-primary;
+  background-color: $background-color-light;
+  border: 1px solid $border-color-dark;
+  padding: 10px 25px;
+  cursor: pointer;
+  &:hover {
+    background: $background-color-dark;
+    color: $font-color-primary;
+    border: 1px solid $border-color-light;
+  }
+  &:focus {
+    outline: 0;
+  }
+}
+
+@mixin basic-link() {
+  color: $font-color-primary;
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:visited {
+    color: $font-color-primary;
+  }
+  &:hover {
+    color: $font-color-primary;
+    text-decoration: none;
+  }
+  &:active {
+    color: $font-color-primary;
+  }
+}
+
+@mixin basic-title() {
+  font-family: "Red Bull Siri", "Geneva CY", "ãƒ’ãƒ©ã‚®ãƒŽè§’ã‚´ Pro W3", "Hiragino Kaku Gothic Pro", "Hiragino Kaku Gothic ProN W3", Osaka, "ãƒ¡ã‚¤ãƒªã‚ª", Meiryo, "ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯", "MS PGothic", "Arial Unicode MS", Tahoma, Helvetica, sans-serif;
+  font-weight: 400;
+}
+
+.app-content {
+  color: #303030
+}
+
+/* overwriting the UIM styles */
+.rb-uim {
+  font-weight: 400;
+
+  .uim-modal-container {
+    background-color: $background-color-dark;
+    color: $font-color-primary;
+    padding: 0;
+
+    &__closebutton {
+      background-color: $background-color-light;
+      color: $font-color-primary;
+
+      &:hover {
+        background-color: $background-color-dark;
+      }
+    }
+  }
+
+  .uim-dialog {
+    &__body {
+      padding: 20px;
+    }
+
+    &__col {
+      padding: 5px 10px 20px 10px;
+    }
+
+    &__title {
+      background-color: $background-color-light;
+      @include basic-title();
+      font-size: 2rem;
+      margin: 0;
+      padding: 15px 30px;
+
+      &--smaller {
+        background: none;
+        padding-left: 0;
+        @include basic-title();
+        font-size: 1.5rem;
+        font-family: sans-serif;
+        margin: 15px 0px;
+      }
+    }
+
+    &__link {
+      @include basic-link();
+
+      &--error {
+        color: $font-color-invalid;
+      }
+    }
+  }
+
+  .uim-social-login {
+    @include basic-button();
+    background-repeat: no-repeat;
+    background-position: 8px 4px;
+    border: 0;
+    margin-bottom: 15px;
+    padding-left: 50px;
+
+    &:hover {
+      background-repeat: no-repeat;
+      background-position: 8px 4px;
+      border: 0;
+    }
+
+    &--facebook {
+      background-color: #3b5998;
+      //background-image: url('../demo/assets/images/rb_fb.png');
+      &:hover {
+        background-color: #3D578E;
+      }
+    }
+  }
+
+  .uim-btn {
+    @include basic-button();
+  }
+
+  .uim-form {
+    &__label {
+      color: $font-color-primary;
+
+      &--error {
+        color: $font-color-invalid;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-top: 3px;
+        position: relative;
+        display: block;
+      }
+    }
+
+    &__group {
+
+    }
+
+    &__input {
+      background-color: $background-color-dark;
+      color: $font-color-primary;
+
+      &:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 100px $background-color-dark inset;
+        -webkit-text-fill-color: $font-color-primary;
+      }
+
+      &:focus {
+        outline: 0;
+        border-bottom: 1px solid $border-color-light;
+        background-color: $background-color-light;
+      }
+    }
+
+    &__link {
+      @include basic-link();
+    }
+  }
+
+  .uim-policy-link {
+    color: $font-color-primary;
+  }
+
+  .uim-form__fieldset {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+
+  /* Styling the tooltip hints*/
+
+  [data-hint]:after {
+    background: $background-color-dark;
+  }
+
+  [class*="hint-bottom"]:before {
+    border-bottom-color: $background-color-dark;
+  }
+
+  [class*="hint-top"]:before {
+    border-top-color: $background-color-dark;
+  }
+
+  [class*="hint-left"]:before {
+    border-left-color: $background-color-dark;
+    left: 0;
+    margin-left: -10px;
+  }
+
+  [class*="hint-right"]:before {
+    border-right-color: $background-color-dark;
+    right: 0;
+    margin-right: -10px;
+  }
+
+  [class*="hint-"][class*="-t-info"][class*="hint-bottom"]:before {
+    border-bottom-color: $background-color-dark;
+  }
+
+  [class*="hint-"][class*="-t-info"][class*="hint-top"]:before {
+    border-top-color: $background-color-dark;
+  }
+
+  [class*="hint-"][class*="-t-info"][class*="hint-right"]:before {
+    border-right-color: $background-color-dark;
+  }
+
+  [class*="hint-"][class*="-t-info"]:after {
+    background: $background-color-dark;
+  }
+}
